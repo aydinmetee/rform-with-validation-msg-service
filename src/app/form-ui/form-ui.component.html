@@ -1,0 +1,56 @@
+
+
+<form [formGroup]="userForm" (ngSubmit)="updateForm()">
+  <div>
+    <div>
+    <p>Username</p>
+    <input type="text" formControlName="userName" appFormControlValidationMsg validationMsgId="username">
+  </div>
+  <div>
+    <p>Email</p>
+    <input type="email" formControlName="email" appFormControlValidationMsg validationMsgId="email">
+  </div>
+  <div>
+    <p>Password</p> 
+    <input type="password" formControlName="password" appFormControlValidationMsg validationMsgId="password">
+  </div>
+  <div>
+    <p>Age</p> 
+    <input type="text" formControlName="age" appFormControlValidationMsg validationMsgId="age">
+  </div>
+  <div>
+
+    <h2>ADDRESS</h2>
+        <button (click)="createAddress()">Add New Address</button>
+
+        <div formArrayName="addresses" *ngFor="let creds of userForm.controls.addresses?.value; let i = index">
+          <ng-container [formGroupName]="i">
+           <div> 
+            <button (click)="removeAddress(index)">Remove</button>
+            <p>Name</p>
+              <input type="text" formControlName="name">
+          
+              <p>Country</p> 
+              <input type="text" formControlName="country">
+            
+              <p>City</p>
+              <input type="text" formControlName="city">
+
+              <p>Town</p>
+              <input type="text" formControlName="town">
+            
+            </div>
+            
+          </ng-container>
+        </div>
+        <button type="submit" appFormSubmitValidationMsg [validationControl]="userForm">SAVE</button>
+      </div>
+
+  </div>
+
+</form>
+
+<p>
+  Form Status: {{ userForm.status }}
+  
+</p>
