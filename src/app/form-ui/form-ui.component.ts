@@ -16,10 +16,10 @@ export class FormUiComponent implements OnInit {
 
   constructor(private formBuilder:FormBuilder) { 
     this.userForm = this.formBuilder.group({
-      userName: ['',Validators.required],
-      email: ['',[Validators.required,Validators.pattern("^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$")]],
-      password:['',[Validators.required]],
-      age:['',[Validators.required,Validators.pattern("^[0-9]{1,3}$")]],
+      userName: [null,Validators.required],
+      email: [null,[Validators.required,Validators.email]],
+      password:[null,[Validators.required,Validators.minLength(5)]],
+      age:[null,[Validators.required,Validators.min(1),Validators.max(100)]],
       addresses:this.formBuilder.array([]),
     });
   }
@@ -30,9 +30,9 @@ export class FormUiComponent implements OnInit {
   createAddress(){
     const address = this.userForm.controls.addresses as FormArray;
       address.push(this.formBuilder.group({
-      name: [''],
-      country: [''],
-      city: [''],
+      name: [null,Validators.required],
+      country: [null,Validators.required],
+      city: [null,Validators.required],
       town: ['']
     }));
   }

@@ -1,56 +1,66 @@
-
-
 <form [formGroup]="userForm" (ngSubmit)="updateForm()">
   <div>
     <div>
-    <p>Username</p>
-    <input type="text" formControlName="userName" appFormControlValidationMsg validationMsgId="username">
-  </div>
-  <div>
-    <p>Email</p>
-    <input type="email" formControlName="email" appFormControlValidationMsg validationMsgId="email">
-  </div>
-  <div>
-    <p>Password</p> 
-    <input type="password" formControlName="password" appFormControlValidationMsg validationMsgId="password">
-  </div>
-  <div>
-    <p>Age</p> 
-    <input type="text" formControlName="age" appFormControlValidationMsg validationMsgId="age">
-  </div>
-  <div>
+      <label>Username</label>
+      <input type="text" formControlName="userName" required />
+      <app-errorMessage [control]="userForm.get('userName')"></app-errorMessage>
+    </div>
+    <div>
+      <label>Email</label>
+      <input type="email" formControlName="email" required />
+      <app-errorMessage [control]="userForm.get('email')"></app-errorMessage>
+    </div>
+    <div>
+      <label>Password</label>
+      <input type="password" formControlName="password" required />
+      <app-errorMessage [control]="userForm.get('password')"></app-errorMessage>
+    </div>
+    <div>
+      <label>Age</label>
+      <input type="text" formControlName="age" required />
+      <app-errorMessage [control]="userForm.get('age')"></app-errorMessage>
+    </div>
+    <div>
+      <h2>ADDRESS</h2>
+      <button (click)="createAddress()">Add New Address</button>
 
-    <h2>ADDRESS</h2>
-        <button (click)="createAddress()">Add New Address</button>
-
-        <div formArrayName="addresses" *ngFor="let creds of userForm.controls.addresses?.value; let i = index">
-          <ng-container [formGroupName]="i">
-           <div> 
-            <button (click)="removeAddress(index)">Remove</button>
-            <p>Name</p>
-              <input type="text" formControlName="name">
-          
-              <p>Country</p> 
-              <input type="text" formControlName="country">
-            
-              <p>City</p>
-              <input type="text" formControlName="city">
-
-              <p>Town</p>
-              <input type="text" formControlName="town">
-            
-            </div>
-            
-          </ng-container>
+      <ng-container
+      *ngFor="let fg of userForm.controls.addresses?.value; let i = index; let c = count"
+    >
+      <div [formGroup]="i" class="address-item">
+        <div>
+          <button (click)="removeAddress(i)" [disabled]="c == 1">
+            remove
+          </button>
+          <label>name</label>
+          <input type="text" formControlName="name" />
+          <app-errorMessage
+            [control]="i.get('name')"
+          ></app-errorMessage>
         </div>
-        <button type="submit" appFormSubmitValidationMsg [validationControl]="userForm">SAVE</button>
+        <div>
+          <label>country</label>
+          <input type="text" formControlName="country" />
+          <app-errorMessage
+            [control]="i.get('country')"
+          ></app-errorMessage>
+        </div>
+        <div>
+          <label>city</label>
+          <input type="text" formControlName="city" />
+          <app-errorMessage
+            [control]="i.get('city')"
+          ></app-errorMessage>
+        </div>
+        <div>
+          <label>town</label>
+          <input type="text" formControlName="town" />
+        </div>
       </div>
-
+    </ng-container>
+      <button type="submit">SAVE</button>
+    </div>
   </div>
-
 </form>
 
-<p>
-  Form Status: {{ userForm.status }}
-  
-</p>
+<p>Form Status: {{ userForm.status }}</p>
